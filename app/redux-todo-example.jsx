@@ -4,7 +4,7 @@ console.log('staring redux example');
 
 var stateDefault = {
   showCompleted: false,
-  searchText: "",
+  searchText: "no search text entered",
   todos: []
 };
 
@@ -23,12 +23,29 @@ var reducer = (state = stateDefault, action) => {
   }
 };
 
-var store = redux.createStore(reducer);
+var store = redux.createStore(reducer, redux.compose(
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+));
 
-console.log('currentState', store.getState());
+// subscribe to changes
+var unsubscribe = store.subscribe(() => {
+  var state = store.getState();
+
+  document.getElementById('app').innerHTML = state.searchText;
+})
+// unsubscribe();
 
 store.dispatch({
   type: 'CHANGE_SEARCH_TEXT',
   searchText: 'You are a moron'
 });
-console.log(store.getState());
+
+store.dispatch({
+  type: 'CHANGE_SEARCH_TEXT',
+  searchText: 'dog'
+});
+
+store.dispatch({
+  type: 'CHANGE_SEARCH_TEXT',
+  searchText: 'cat'
+});
