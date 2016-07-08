@@ -2,7 +2,13 @@ var redux = require('redux');
 
 console.log('staring redux example');
 
-var reducer = (state = {name: 'Anonymous'}, action) => {
+var stateDefault = {
+  showCompleted: false,
+  searchText: "",
+  todos: []
+};
+
+var reducer = (state = stateDefault, action) => {
   // ES5 Code
   //state = state || {name: 'Anonymous'};
 
@@ -11,5 +17,4 @@ var reducer = (state = {name: 'Anonymous'}, action) => {
 
 var store = redux.createStore(reducer);
 
-var currentState = store.getState();
-console.log('currentState', currentState);
+console.log('currentState', store.getState());
