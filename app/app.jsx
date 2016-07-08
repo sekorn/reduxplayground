@@ -15,3 +15,5 @@ ReactDOM.render(
   <p>biolerplate3 probject</p>,
   document.getElementById('app')
 );
+
+require('./redux-example.jsx');
