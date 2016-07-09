@@ -2,15 +2,8 @@ var redux = require('redux');
 
 console.log('staring redux example');
 
-var stateDefault = {
-  name: 'Anonymouse',
-  hobbies: [],
-  movies: []
-};
-
-var nextHobbyId = 1;
-var nextMovieId = 1;
-
+// Name Reducer and action generators
+// -------------------------
 var nameReducer = (state = 'Anonymous', action) => {
   switch (action.type) {
     case 'CHANGE_NAME':
@@ -20,6 +13,16 @@ var nameReducer = (state = 'Anonymous', action) => {
   }
 }
 
+var changeName = (name) => {
+  return {
+    type: 'CHANGE_NAME',
+    name  // same as name: name
+  }
+}
+
+// Hobbies Reducer and action generators
+// -------------------------
+var nextHobbyId = 1;
 var hobbiesReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_HOBBY':
@@ -37,6 +40,23 @@ var hobbiesReducer = (state = [], action) => {
   }
 };
 
+var addHobby = (hobby) => {
+  return {
+    type: 'ADD_HOBBY',
+    hobby
+  };
+};
+
+var removeHobby = (id) => {
+  return {
+    type: 'REMOVE_HOBBY',
+    id
+  };
+};
+
+// Movies Reducer and actions generators
+// -------------------------
+var nextMovieId = 1;
 var moviesReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_MOVIE':
@@ -53,6 +73,21 @@ var moviesReducer = (state = [], action) => {
     default:
       return state;
   }
+};
+
+var addMovie = (title, genre) => {
+  return {
+    type: 'ADD_MOVIE',
+    title,
+    genre
+  };
+};
+
+var removeMovie = (id) => {
+  return {
+    type: 'REMOVE_MOVIE',
+    id
+  };
 };
 
 var reducer = redux.combineReducers({
@@ -76,44 +111,11 @@ var unsubscribe = store.subscribe(() => {
 
 var currentState = store.getState();
 
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Snoogins'
-});
-
-store.dispatch({
-  type: 'ADD_HOBBY',
-  hobby: 'Running'
-});
-
-store.dispatch({
-  type: 'ADD_HOBBY',
-  hobby: 'Walking'
-});
-
-store.dispatch({
-  type: 'REMOVE_HOBBY',
-  id: 2
-});
-
-store.dispatch({
-  type: 'ADD_MOVIE',
-  movie: 'Better Off Dead',
-  genre: 'Comedy'
-});
-
-store.dispatch({
-  type: 'ADD_MOVIE',
-  movie: 'Mad Max',
-  genre: 'Action'
-});
-
-store.dispatch({
-  type: 'REMOVE_MOVIE',
-  id: 1,
-});
-
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Emily'
-});
+store.dispatch(changeName('Scott'));
+store.dispatch(addHobby('Running'));
+store.dispatch(addHobby('Walking'));
+store.dispatch(removeHobby(2));
+store.dispatch(addMovie('Better Off Dead', 'Comedy'));
+store.dispatch(addMovie('Mad Max','Action'));
+store.dispatch(removeMovie(1));
+store.dispatch(changeName('Emily'));
